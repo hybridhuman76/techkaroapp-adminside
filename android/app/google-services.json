@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "810605934692",
+    "project_id": "techkaroapp",
+    "storage_bucket": "techkaroapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:810605934692:android:4b44053185cd87cdd6c771",
+        "android_client_info": {
+          "package_name": "com.techkaroapp.admin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "810605934692-m6p5iblo0fpddk9phsihctous1frqofe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAKMdJ5YXao8P_M0ZpKIKJYIQS6G5yPeNA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "810605934692-m6p5iblo0fpddk9phsihctous1frqofe.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "810605934692-13329gqbn5cl7ecccuam5g7lgt1rb7vv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.techkaroapp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:810605934692:android:a55fdd2431a7db75d6c771",
+        "android_client_info": {
+          "package_name": "com.techkaroapp.user"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "810605934692-m6p5iblo0fpddk9phsihctous1frqofe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAKMdJ5YXao8P_M0ZpKIKJYIQS6G5yPeNA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "810605934692-m6p5iblo0fpddk9phsihctous1frqofe.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "810605934692-13329gqbn5cl7ecccuam5g7lgt1rb7vv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.techkaroapp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
