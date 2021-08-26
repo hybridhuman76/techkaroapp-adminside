@@ -7,7 +7,10 @@ class GateKeeperHome extends StatefulWidget {
   _GateKeeperHomeState createState() => _GateKeeperHomeState();
 }
 
-List<Map> visitorss = [];
+List<Map> visitorss = [
+  {"name": "Aakash", "intime": "12:00", "totalmem": 5, "isvehicle": false},
+  {"name": "AakashS", "intime": "2:00", "totalmem": 6, "isvehicle": true}
+];
 
 class _GateKeeperHomeState extends State<GateKeeperHome> {
   @override
@@ -32,7 +35,7 @@ class _GateKeeperHomeState extends State<GateKeeperHome> {
                         // color: Colors.orange,
                         width: w - 90,
                         child: Text(
-                          visitorss[index].toString(),
+                          "hehe",
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold),
                         ),
@@ -62,9 +65,10 @@ class _GateKeeperHomeState extends State<GateKeeperHome> {
     return Scaffold(
         body: Container(
             child: Column(children: <Widget>[
+      Text("hello"),
       Container(
         height: 500,
-        child: Text("hello"),
+        child: visitors(w),
       )
     ])));
   }

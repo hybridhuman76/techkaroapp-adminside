@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:techkaro_admin/homepage.dart';
@@ -7,9 +8,45 @@ class AdminHome extends StatefulWidget {
   _AdminHomeState createState() => _AdminHomeState();
 }
 
+String apt;
+List<Map> complaints;
+List<Map> members;
+List<Map> services;
+List<Map> visitors;
+
 class _AdminHomeState extends State<AdminHome> {
+  void x() {
+    FirebaseFirestore.instance
+        .collection("admins")
+        .doc(FirebaseAuth.instance.currentUser.uid)
+        .get()
+        .then((value) => {
+              if (value.exists)
+                {
+                  setState(() {
+                    apt = "${value.data()['apt']}";
+                  })
+                }
+            })
+        .then((value) => {
+              FirebaseFirestore.instance
+                  .collection("apartments")
+                  .doc(apt)
+                  .get()
+                  .then((value) => {
+                        setState(() {
+                          complaints = List.from(value.data()['complaints']);
+                          members = List.from(value.data()['apt']);
+                          services = List.from(value.data()['services']);
+                          visitors = List.from(value.data()['visitors']);
+                        })
+                      })
+            });
+  }
+
   @override
   Widget build(BuildContext context) {
+    x();
     double w = MediaQuery.of(context).size.width;
     return Scaffold(
         body: Container(
