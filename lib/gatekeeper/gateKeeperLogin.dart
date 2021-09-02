@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:techkaro_admin/gatekeeper/gateKeeperHome.dart';
+import 'package:path_provider/path_provider.dart';
+import 'dart:io';
 
 class GateKeeperLogin extends StatefulWidget {
   @override
@@ -8,12 +11,15 @@ class GateKeeperLogin extends StatefulWidget {
 
 class _GateKeeperLoginState extends State<GateKeeperLogin> {
   List<String> apartments = [];
+  String msg = "";
   @override
   Widget build(BuildContext context) {
     double w = MediaQuery.of(context).size.width;
     String dropdownValue = 'One';
-    String pin;
-    String apt;
+    String pin = "";
+    String apt = "";
+    TextEditingController aptcon;
+    TextEditingController pincon;
     return Scaffold(
       body: Container(
         child: Column(
@@ -33,9 +39,7 @@ class _GateKeeperLoginState extends State<GateKeeperLogin> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
                   TextField(
-                    onChanged: (value) {
-                      apt = value;
-                    },
+                    controller: aptcon,
                     textAlign: TextAlign.center,
                     decoration: new InputDecoration(
                       hintText: 'Select Apartment',
@@ -52,9 +56,7 @@ class _GateKeeperLoginState extends State<GateKeeperLogin> {
                   ),
                   TextField(
                     obscureText: true,
-                    onChanged: (value) {
-                      pin = value;
-                    },
+                    controller: pincon,
                     textAlign: TextAlign.center,
                     decoration: new InputDecoration(
                       hintText: 'Security Pin',
@@ -91,10 +93,49 @@ class _GateKeeperLoginState extends State<GateKeeperLogin> {
                 ),
               ),
               onTap: () async {
-                await Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => GateKeeperHome()));
+                print(aptcon.text);
+                await FirebaseFirestore.instance
+                    .collection("apartments")
+                    .doc(apt)
+                    .get()
+                    .then((value) => {
+                          if (value.exists)
+                            {
+                              if (pin == value.data()['pin'].toString())
+                                {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              GateKeeperHome()))
+                                }
+                              else
+                                {
+                                  setState(() {
+                                    msg = "Wrong Pin";
+                                  })
+                                }
+                            }
+                          else
+                            {
+                              setState(() {
+                                msg = "something went wrong";
+                              })
+                            }
+                        });
+                // await Navigator.push(context,
+                //     MaterialPageRoute(builder: (context) => GateKeeperHome()));
+
+                // final directory = await getApplicationDocumentsDirectory();
+                // final file = File('${directory}checkgatekeeper.txt');
+                // final text = 'Hello';
+                // file.openWrite();
+                // // await file.writeAsString(text);
+                // await file.writeAsString("gatekeeper");
+                // print('saved');
               },
             ),
+            Text("$msg"),
             MaterialButton(
                 onPressed: () {
                   Navigator.pop(context);

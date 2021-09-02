@@ -1,6 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:techkaro_admin/admin/bills.dart';
+import 'package:techkaro_admin/admin/chat.dart';
+import 'package:techkaro_admin/admin/complaints.dart';
+import 'package:techkaro_admin/admin/details.dart';
+import 'package:techkaro_admin/admin/services.dart';
+import 'package:techkaro_admin/admin/visitors.dart';
 import 'package:techkaro_admin/homepage.dart';
 
 class AdminHome extends StatefulWidget {
@@ -8,14 +14,16 @@ class AdminHome extends StatefulWidget {
   _AdminHomeState createState() => _AdminHomeState();
 }
 
-String apt;
-List<Map> complaints;
-List<Map> members;
-List<Map> services;
-List<Map> visitors;
+var whole;
+String apt = "";
+List<Map> complaints = [];
+List<Map> members = [];
+List<Map> services = [];
+List<Map> visitors = [];
+Map<String, String> details;
 
 class _AdminHomeState extends State<AdminHome> {
-  void x() {
+  x() {
     FirebaseFirestore.instance
         .collection("admins")
         .doc(FirebaseAuth.instance.currentUser.uid)
@@ -25,28 +33,59 @@ class _AdminHomeState extends State<AdminHome> {
                 {
                   setState(() {
                     apt = "${value.data()['apt']}";
+                    // print(apt);
+                    // apt =
                   })
                 }
-            })
+            });
+    // .then((_) => {
+    //       FirebaseFirestore.instance
+    //           .collection("apartments")
+    //           .doc(apt)
+    //           .get()
+    //           .then((value) => {
+    //                 if (value.exists)
+    //                   {
+    //                     setState(() {
+    //                       complaints =
+    //                           List.from(value.data()['complaints']);
+    //                       members = List.from(value.data()['apt']);
+    //                       services = List.from(value.data()['services']);
+    //                       visitors = List.from(value.data()['visitors']);
+    //                       details = Map.from(value.data()['details']);
+    //                     })
+    //                   }
+    //               })
+    //     });
+  }
+
+  y() {
+    FirebaseFirestore.instance
+        .collection("apartments")
+        .doc(apt)
+        .get()
         .then((value) => {
-              FirebaseFirestore.instance
-                  .collection("apartments")
-                  .doc(apt)
-                  .get()
-                  .then((value) => {
-                        setState(() {
-                          complaints = List.from(value.data()['complaints']);
-                          members = List.from(value.data()['apt']);
-                          services = List.from(value.data()['services']);
-                          visitors = List.from(value.data()['visitors']);
-                        })
-                      })
+              if (value.exists)
+                {
+                  setState(() {
+                    whole = value.data();
+
+                    // complaints = List.from(value.data()['complaints']);
+                    // print(complaints);
+                    // members = List.from(value.data()['apt']);
+                    // services = List.from(value.data()['services']);
+                    // visitors = List.from(value.data()['visitors']);
+                    // details = Map.from(value.data()['details']);
+                  }),
+                  print(whole)
+                }
             });
   }
 
   @override
   Widget build(BuildContext context) {
     x();
+    y();
     double w = MediaQuery.of(context).size.width;
     return Scaffold(
         body: Container(
@@ -68,22 +107,58 @@ class _AdminHomeState extends State<AdminHome> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              cont(w, "  Service\nRequests", 232),
-              cont(w, "Chats", 2)
+              InkWell(
+                child: cont(w, "  Service\nRequests", 232),
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Services()));
+                },
+              ),
+              InkWell(
+                child: cont(w, "Chats", 232),
+                onTap: () {
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => Chat()));
+                },
+              ),
             ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              cont(w, "Visitors", 22),
-              cont(w, "Complaints", 56)
+              InkWell(
+                child: cont(w, "Visitors", 232),
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Visitors()));
+                },
+              ),
+              InkWell(
+                child: cont(w, "Complaints", 232),
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Complaints()));
+                },
+              ),
             ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              cont(w, "Bills", 2),
-              cont(w, "Society\nDetails", 2)
+              InkWell(
+                child: cont(w, "Bills", 232),
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Bills()));
+                },
+              ),
+              InkWell(
+                child: cont(w, "Society\nDetails", 232),
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Details()));
+                },
+              ),
             ],
           ),
           InkWell(
